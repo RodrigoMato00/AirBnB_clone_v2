@@ -16,8 +16,8 @@ class BaseModel:
     updated_at = Column(DateTIme, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-	"""Instatntiates a new model"""
-	if kwargs:
+        """Instatntiates a new model"""
+        if kwargs:
             if "id" not in kwargs.keys():
                 self.id = str(uuid.uuid4())
             if "created_at" not in kwargs.keys():
@@ -32,8 +32,7 @@ class BaseModel:
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
-	
-        
+
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
@@ -56,6 +55,6 @@ class BaseModel:
             del my_dict["_sa_instance_state"]
         return my_dict
 
-   def delete(self):
-       """deletes thingies"""
-       storage.delete(self)
+    def delete(self):
+        """deletes thingies"""
+        storage.delete(self)
