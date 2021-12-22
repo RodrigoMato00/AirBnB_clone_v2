@@ -120,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not par[0]:
             print("** class name missing **")
-	    return
+            return
 
         elif class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
@@ -178,8 +178,8 @@ class HBNBCommand(cmd.Cmd):
             instance = HBNBCommand.classes[class_name]()
 
             for key, val in dict_kwargs.items()
-                setattr(instance, key, val)
-                storage.new(instance)
+            setattr(instance, key, val)
+            storage.new(instance)
             storage.save()
             print(instance.id)
             storage.save()
