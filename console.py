@@ -115,81 +115,35 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        par = args.split(" ")
-        class_name = par[0]
-
-        if not par[0]:
-            print("** class name missing **")
-            return
-
-        elif class_name not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        par.pop(0)
-        dic_kwargs = {}
-
-        if len(par) >= 1:
-
-            for item in par:
-
-                if '=' in item:
-                    kval = item.split('=')
-
-                    if kval[1]:
-
-                        if kval[1][0] == '"' and kval[1][-1] == '"':
-                            check = kval[1][1:-1]
-                            check = check.replace('_', ' ')
-
-                        elif '.' in kval[1]:
-                            num = kval[1].split('.')
-                            nopos = False
-
-                            if num[0][0] == "-":
-                                nopos = True
-                                num[0] = num[0].replace('-', '')
-
-                            if num[0].isnumeric() is True:
-
-                                if num[1].isnumeric() is True:
-                                    check = nus[0] + '.' + num[1]
-
-                                    if nopos is True:
-                                        check = '-' + num[0] + '.' + nums[1]
-
-                                    else:
-                                        check = num[0] + '.' + num[1]
-                                    check = float(check)
-
-                        elif kval[1][0] == "-":
-                            if kval[1][1:].isnumeric() is True:
-                                check = int(kval[1])
-
-                        elif kval[1].isnumeric() is True:
-                            check = int(kval[1])
-
+        try:
+            if not args:
+                raise SyntaxError()
+            mylist = args.split(" ")
+            prms = {}
+            if len(mylist) > 1:
+                for i in range(1, len(mylist)):
+                    if len(mylist[i].split("=")) == 2:
+                        key = mylist[i].split("=")[0]
+                        val = mylist[i].split("=")[1].replace("_", " ")
+                        val = val.strip('"')
+                        if val.isnumeric():
+                            val = int(val)
                         else:
-                            continue
-                        dic_kwargs[keval[0]] = check
-
-                else:
-                    continue
-
-            instance = HBNBCommand.classes[class_name]()
-
-            for key, val in dict_kwargs.items()
-            setattr(instance, key, val)
-            storage.new(instance)
-            storage.save()
-            print(instance.id)
-            storage.save()
-
-        else:
-            instance = HBNBCommand.classes[class_name]()
-            storage.new(instance)
-            storage.save()
-            print(instance.id)
-
+                            try:
+                                float(val)
+                            except Exception:
+                                pass
+                        prms[key] = val
+            obj = eval("{}()".format(mylist[0]))
+            for key, v in prms.items():
+                setattr(obj, key, v)
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
+           pass
+        except NameError:
+            pass
+                     
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
