@@ -123,8 +123,7 @@ class TestHBNBCommand(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.cmd.onecmd("all Review")
             self.assertIn("Review", f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
