@@ -10,7 +10,10 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import shlex
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -140,10 +143,10 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
-           pass
+            pass
         except NameError:
             pass
-                     
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
@@ -217,21 +220,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+        a = shlex.split(args)
+        objlist = []
+        if len(a) == 0:
+            objdict = storage.all()
+        elif a[0] in classes:
+            objdict = storage.all(classes[a[0]])
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
-        print(print_list)
+            print("** class doesn't exist **")
+            return False
+        for k in objdict:
+            objlist.append(str(objdict[k]))
+        print("[", end="")
+        print(", ".join(objlist), end="")
+        print("]")     
 
     def help_all(self):
         """ Help information for the all command """
