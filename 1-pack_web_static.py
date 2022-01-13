@@ -14,9 +14,9 @@ def do_pack():
     fabric script
     """
     date_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    name_tgz =  date_time + ".tgz"
+    name_tgz = "versions/web_static_" + date_time + ".tgz"
     local("mkdir -p versions")
-    local("tar -cvzf {} /data/web_static/".format(name_tgz))
+    local("tar -cvzf " + name_tgz + " web_static")
     if not (os.path.exists(name_tgz)):
         return None
     else:
