@@ -3,31 +3,36 @@
 all all
 """
 
-from fabric.operations import local, run, put
+from fabric.api import run
+from fabric.api import local
+from fabric.api import get
+from fabric.api import put
+from fabric.api import env
 from datetime import datetime
 import os
-from fabric.api import env
-
 
 env.hosts = ['34.138.95.23', '18.212.250.192']
 
 
 def do_pack():
     """
-    static
+    do_pack
     """
+    complete_time = datetime.now()
+    string_time = complete_time.strftime("%Y%m%d%H%M%S")
+    tgz_name = string_time + '.tgz'
     local("mkdir -p versions")
-    result = local("tar -cvzf versions/web_static_{}.tgz web_static"
-                   .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")),
-                   capture=True)
-    if result.failed:
+    local("tar -cvzf versions/web_static_{} web_static".format(tgz_name))
+    path_tgz = 'versions/web_static_{}'.format(tgz_name)
+    if os.path.exists(path_tgz):
+        return path_tgz
+    else:
         return None
-    return result
 
 
 def do_deploy(archive_path):
     """
-    web servers
+    do_deploy
     """
     if os.path.exists(archive_path):
         try:
@@ -50,7 +55,9 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """ deploy """
+    """
+    deploy
+    """
     archive_path = do_pack()
     if archive_path is None:
         return False
