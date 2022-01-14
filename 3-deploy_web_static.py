@@ -29,26 +29,23 @@ def do_deploy(archive_path):
     """
     web servers
     """
-    if os.path.exists(archive_path) is False:
-        print('file not found')
-        return False
-    try:
-        slash = archive_path.find('/') + 1
-        filename = archive_path[slash:]
-        put(archive_path, '/tmp/{}'.format(filename))
-        run('mkdir -p /data/web_static/releases/' + filename[:-4])
-        run('tar -xzvf /tmp/' + filename + ' -C /data/web_static/releases/' +
-            filename[:-4] + '/')
-        run('rm /tmp/' + filename)
-        run('mv /data/web_static/releases/' + filename[:-4] + '/web_static/* \
-            /data/web_static/releases/' + filename[:-4] + '/')
-        run('rm -rf /data/web_static/releases/' + filename[:-4] +
-            '/web_static')
-        run('rm -rf /data/web_static/current')
-        run('ln -s /data/web_static/releases/{} /data/web_static/current'
-            .format(filename[:-4]))
-        return True
-    except Exception:
+    if os.path.exists(archive_path):
+        try:
+            file_n = archive_path.split("/")[-1]
+            no_ext = file_n.split(".")[0]
+            path = "/data/web_static/releases/"
+            put(archive_path, '/tmp/')
+            run('mkdir -p {}{}/'.format(path, no_ext))
+            run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+            run('rm /tmp/{}'.format(file_n))
+            run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+            run('rm -rf {}{}/web_static'.format(path, no_ext))
+            run('rm -rf /data/web_static/current')
+            run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+            return True
+        except Exception:
+            return False
+    else:
         return False
 
 
