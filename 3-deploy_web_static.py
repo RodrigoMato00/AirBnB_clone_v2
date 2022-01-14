@@ -24,6 +24,7 @@ def do_pack():
         return None
     return result
 
+
 def do_deploy(archive_path):
     """
     web servers
@@ -47,7 +48,7 @@ def do_deploy(archive_path):
         run('ln -s /data/web_static/releases/{} /data/web_static/current'
             .format(filename[:-4]))
         return True
-    except:
+    except Exception:
         return False
 
 
@@ -56,10 +57,10 @@ def do_pack():
     40404040404040404040
     """
     f_n = "web_static_" + datetime.strftime(datetime.now(),
-                                                 "%Y%m%d%H%M%S") + ".tgz"
+                                            "%Y%m%d%H%M%S") + ".tgz"
     local("mkdir -p versions")
     try:
         local("tar -czvf ./versions/{} ./web_static" .format(f_n))
         return "versions/{}".format(f_n)
-    except Exception as error:
+    except Exception:
         return None
