@@ -1,49 +1,53 @@
 #!/usr/bin/python3
 """
-abric script (based on the file 1-pack_web_static.py)
-that distributes an archive to your web servers,
-using the function do_deploy
+all all
 """
-from fabric.api import local
-from fabric.api import env
+
+from fabric.operations import local, run, put
 from datetime import datetime
 import os
+from fabric.api import env
+import re
 
-env.host = ["34.138.95.23", "18.212.250.192"]
+
+env.hosts = ['34.138.95.23', '18.212.250.192']
 
 
 def do_pack():
     """
-    fabric script
+    static
     """
-    date_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    name_tgz = "versions/web_static_" + date_time + ".tgz"
     local("mkdir -p versions")
-    local("tar -cvzf " + name_tgz + " web_static")
-    if not (os.path.exists(name_tgz)):
+    result = local("tar -cvzf versions/web_static_{}.tgz web_static"
+                   .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")),
+                   capture=True)
+    if result.failed:
         return None
-    else:
-        return (name_tgz)
+    return result
 
 
 def do_deploy(archive_path):
     """
-    do_deploy(archive_path)
+    web servers
     """
-    if not os.path.exists(archive_path) and not os.path.isfile(archive_path):
+    if os.path.exists(archive_path) is False:
+        print('file not found')
         return False
-        put(archive_path, "/tmp/")
-        archive = archive_path.replace(".tgz", "")
-        archive = archive.replace("versions", "")
-        run("mkdir -p /data/web_static/releases/{}".format(archive))
-        run("tar -xvz /tmp/{}.tgz -C /data/web_static/releases/{}"
-            .format(archive, archive))
-        run("rm /tmp/{}.tgz".format(archive))
-        run("mv /data/web_static/releases/{}/web_static/*".format(archive) +
-            "/data/web_static/releases/{}/".format(archive))
-        run("rm -rf /data/web_static/releases/{}/web_static".fotmat(archive))
-        run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
-            .format(archive))
-        print("New version deployed!")
+    try:
+        slash = archive_path.find('/') + 1
+        filename = archive_path[slash:]
+        put(archive_path, '/tmp/{}'.format(filename))
+        run('mkdir -p /data/web_static/releases/' + filename[:-4])
+        run('tar -xzvf /tmp/' + filename + ' -C /data/web_static/releases/' +
+            filename[:-4] + '/')
+        run('rm /tmp/' + filename)
+        run('mv /data/web_static/releases/' + filename[:-4] + '/web_static/* \
+            /data/web_static/releases/' + filename[:-4] + '/')
+        run('rm -rf /data/web_static/releases/' + filename[:-4] +
+            '/web_static')
+        run('rm -rf /data/web_static/current')
+        run('ln -s /data/web_static/releases/{} /data/web_static/current'
+            .format(filename[:-4]))
         return True
+    except:
+        return False
