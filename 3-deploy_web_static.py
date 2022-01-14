@@ -52,15 +52,6 @@ def do_deploy(archive_path):
         return False
 
 
-def do_pack():
-    """
-    40404040404040404040
-    """
-    f_n = "web_static_" + datetime.strftime(datetime.now(),
-                                            "%Y%m%d%H%M%S") + ".tgz"
-    local("mkdir -p versions")
-    try:
-        local("tar -czvf ./versions/{} ./web_static" .format(f_n))
-        return "versions/{}".format(f_n)
-    except Exception:
-        return None
+def deploy():
+    """ deploy """
+    return True
