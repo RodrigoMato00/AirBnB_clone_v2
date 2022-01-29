@@ -36,7 +36,7 @@ def function_c(text):
 
 @app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
-def python(text="is cool"):
+def function_python(text="is cool"):
     """
     python/(<text>): display “Python ”,
     followed by the value of the text variable
