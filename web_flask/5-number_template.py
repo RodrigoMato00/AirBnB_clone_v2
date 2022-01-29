@@ -56,7 +56,7 @@ def function_number(n):
 
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
-def number_template(n):
+def function_number_template(n):
     """
     /number_template/<n>:
     display a HTML page only if n is an integer:
