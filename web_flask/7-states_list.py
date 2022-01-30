@@ -21,12 +21,12 @@ def states_ls():
     """
     state list
     """
-    st = storage.all("State").values()
-    return render_template("7-states_list.html", states=st)
+    states = storage.all("State")
+    return render_template("7-states_list.html", states=states)
 
 
 @app.teardown_appcontext
-def handle_trd(self):
+def handle_trd():
     """
     method teardown
     """
