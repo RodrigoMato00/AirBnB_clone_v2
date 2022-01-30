@@ -20,6 +20,7 @@ def display_states():
     storage_states = storage.all('State')
     return render_template('8-cities_by_states.html', storage_states=states)
 
+
 @app.route('/states/<id>', strict_slashes=False)
 def display_cities(id):
     """
