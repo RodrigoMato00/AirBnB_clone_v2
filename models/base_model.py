@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, Integer
 from models import storage
 
 Base = declarative_base()
@@ -57,7 +57,7 @@ class BaseModel:
         dict = {}
         dict.update(self.__dict__)
         dict.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+                    (str(type(self)).split('.')[-1]).split('\'')[0]})
         dict['created_at'] = self.created_at.isoformat()
         dict['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dict.keys():
