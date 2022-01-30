@@ -6,8 +6,8 @@
   <BODY>
     <H1>States</H1>
     <UL>
-        {% for key, value in states.items()|sort(attribute="1.name") %}
-            <LI>{{ value.id }}: <B>{{ value.name }}</B></LI>
+        {% for state in states|sort(attribute='name') %}
+          <li>{{ state.id }}: <b>{{ state.name }}</b></LI>
         {% endfor %}
     </UL>
   </BODY>
