@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
-
 import json
 
 
@@ -18,7 +17,7 @@ class FileStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.__objects["{}.{}".format(type(obj).__name__, obj.id)] = obj
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -30,15 +29,9 @@ class FileStorage:
             json.dump(temp, f)
 
     def delete(self, obj=None):
-        """to delete obj from __objects if it’s inside
-        if obj is equal to None, the method should not do anything"""
+        """ Delete obj from __objects """
         if obj:
-            try:
-                del self.__objects[obj.to_dict()['__class__'] + '.' + obj.id]
-            except Exception:
-                pass
-        else:
-            return
+            del self.__objects[obj.to_dict()['__class__'] + '.' + obj.id]
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -65,4 +58,5 @@ class FileStorage:
             pass
 
     def close(self):
+        """ close """
         return self.reload()
