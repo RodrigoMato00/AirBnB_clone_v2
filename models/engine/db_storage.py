@@ -12,7 +12,6 @@ from models.review import Review
 from models.amenity import Amenity
 from os import getenv
 from sqlalchemy.orm import scoped_session
-from sqlalchemy.sql import text
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
