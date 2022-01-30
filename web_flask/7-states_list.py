@@ -26,7 +26,7 @@ def states_lists():
 
 
 @app.teardown_appcontext
-def teardown_close():
+def teardown_close(self):
     """
     method teardown
     """
