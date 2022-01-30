@@ -1,18 +1,18 @@
 #!/usr/bin/python3
 """
-    DB - Storage
+DataBase Storage
 """
 
-from sqlalchemy import create_engine
-from models.base_model import Base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 from models.state import State
 from models.user import User
+from sqlalchemy import create_engine
+from models.base_model import Base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session
 from os import getenv
 
 
@@ -25,7 +25,9 @@ dict_class = {"Amenity": Amenity,
 
 
 class DBStorage:
-    """ DBStorage """
+    """
+    DataBase Storage
+    """
     __engine = None
     __session = None
 
@@ -56,20 +58,28 @@ class DBStorage:
         return dicto
 
     def new(self, obj):
-        """add obj to the current database session."""
+        """
+        add obj to current database session
+        """
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """
+        commit all changes current database session
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """ delete from the current database session obj if not None"""
+        """
+        delete from current database session obj if not None
+        """
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """create all tables in the database and initialize session"""
+        """
+        create all tables in database and initialize session
+        """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
@@ -77,5 +87,7 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """close session"""
+        """
+        close
+        """
         self.__session.close()
