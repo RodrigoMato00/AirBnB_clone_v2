@@ -17,7 +17,7 @@ def display_states():
     display a HTML page
     list of all states and related cities
     """
-    storage_states = storage.all('State')
+    storage_states = storage.all(State)
     return render_template('8-cities_by_states.html', storage_states=states)
 
 

@@ -17,7 +17,7 @@ def display_states():
     display a HTML page
     list of all states and related cities
     """
-    storage_states = storage.all('State')
+    storage_states = storage.all(State)
     return render_template('8-cities_by_states.html', storage_states=states)
 
 
@@ -27,7 +27,7 @@ def display_cities(id):
     display a HTML page
     list of all states and related cities
     """
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         if state.id == id:
             return render_template("9-states.html", state=state)
     return render_template("9-states.html")
@@ -38,7 +38,7 @@ def filters():
     """
     Displays the filters in HTML page
     """
-    states = storage.all("State")
+    states = storage.all(State)
     amenities = storage.all("Amenity")
     return render_template("10-hbnb_filters.html",
                            states=states, amenities=amenities)
