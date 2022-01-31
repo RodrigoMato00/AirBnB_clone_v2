@@ -23,9 +23,6 @@ def states(id=None):
         id = '{}.{}'.format('State', id)
         return render_template('9-states.html', states=sstates, id=id)
 
-    elif id is None:
-        return render_template("9-states.html", states=sstates, id=id)
-
 
 @app.teardown_appcontext
 def teardown(self):
