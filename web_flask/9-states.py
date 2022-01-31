@@ -16,8 +16,8 @@ def states():
     """
     Displays an HTML page in a list of all States, states sorted by name
     """
-    states = storage.all(State)
-    return render_template("9-states.html", state=states)
+    sstates = storage.all(State)
+    return render_template("9-states.html", state=sstates)
 
 
 @app.route("/states/<id>", strict_slashes=False)
@@ -26,9 +26,9 @@ def states_id(id):
     Displays a HTML page with info about
     <id>, if it exists
     """
-    for state in storage.all(State).values():
+    for sstate in storage.all(State).values():
         if state.id == id:
-            return render_template("9-states.html", state=state)
+            return render_template("9-states.html", state=sstate)
     return render_template("9-states.html")
 
 
