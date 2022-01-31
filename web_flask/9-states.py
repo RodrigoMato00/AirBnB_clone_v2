@@ -20,11 +20,10 @@ def states(id):
     """
     sstates = storage.all(State)
     if id is not None:
-        if id = id + "State."
-            return render_template("9-states.html", states=sstates, id=id)
-        else:
-            sstates = None
-    elif id is not None:
+        id = '{}.{}'.format('State', id)
+        return render_template('9-states.html', states=sstates, id=id)
+
+    elif id is None:
         return render_template("9-states.html", states=sstates, id=id)
 
 
