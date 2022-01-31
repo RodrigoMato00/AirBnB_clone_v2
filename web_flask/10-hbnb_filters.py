@@ -38,10 +38,10 @@ def filters():
     """
     Displays the filters in HTML page
     """
-    states = storage.all(State)
-    amenities = storage.all("Amenity")
+    sstates = storage.all(State)
+    samenities = storage.all("Amenity")
     return render_template("10-hbnb_filters.html",
-                           states=states, amenities=amenities)
+                           states=sstates, amenities=samenities)
 
 
 @app.teardown_appcontext
