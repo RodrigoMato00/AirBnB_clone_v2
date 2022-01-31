@@ -23,11 +23,10 @@ def idstates(id=None):
         id = '{}.{}'.format('State', id)
     return render_template('9-states.html', states=sstates, id=id)
 
-
 @app.teardown_appcontext
-def teardown(self):
+def teardown_close(self):
     """
-    close storage
+    method teardown
     """
     storage.close()
 
