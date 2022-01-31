@@ -26,7 +26,9 @@ def states(id=None):
 
 @app.teardown_appcontext
 def teardown(self):
-    """ close storage """
+    """
+    close storage
+    """
     storage.close()
 
 
