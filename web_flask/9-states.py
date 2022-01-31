@@ -11,23 +11,23 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route('/cities_by_states', strict_slashes=False)
-def display_states():
+@app.route("/states", strict_slashes=False)
+def states():
     """
-    display a HTML page
-    list of all states and related cities
+    Displays an HTML page in a list of all States, states sorted by name
     """
-    storage_states = storage.all('State')
-    return render_template('8-cities_by_states.html', states=storage_states)
+    states = storage.all(State)
+    return render_template("9-states.html", state=states)
 
 
-@app.route('/states/<id>', strict_slashes=False)
-def display_cities(id):
+
+@app.route("/states/<id>", strict_slashes=False)
+def states_id(id):
     """
-    display a HTML page
-    list of all states and related cities
+    Displays a HTML page with info about
+    <id>, if it exists
     """
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         if state.id == id:
             return render_template("9-states.html", state=state)
     return render_template("9-states.html")
