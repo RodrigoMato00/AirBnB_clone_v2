@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route("/states", strict_slashes=False)
 @app.route("/states/<id>", strict_slashes=False)
-def states(id=None):
+def idstates(id=None):
     """
     Displays an HTML page in a list of all States, states sorted by name
     Displays a HTML page with info about <id>, if it exists
