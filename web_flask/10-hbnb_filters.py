@@ -11,6 +11,15 @@ from models.state import State
 app = Flask(__name__)
 
 
+@app.route("/states_list", strict_slashes=False)
+def states_lists():
+    """
+    state list
+    """
+    sstates = storage.all(State)
+    return render_template("7-states_list.html", states=sstates)
+
+
 @app.route('/cities_by_states', strict_slashes=False)
 def display_states():
     """
