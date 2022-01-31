@@ -19,10 +19,9 @@ def states(id):
     Displays a HTML page with info about <id>, if it exists
     """
     sstates = storage.all(State)
-    if id is None:
-        kid = '{}.{}'.format('State', id)
-        if kid in sstates:
-            sstates = sstates[kid]
+    if id is not None:
+        if id = id + "State."
+            return render_template("9-states.html", states=sstates, id=id)
         else:
             sstates = None
     elif id is not None:
