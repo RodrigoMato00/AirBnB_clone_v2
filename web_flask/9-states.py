@@ -27,7 +27,7 @@ def states_id(id):
     <id>, if it exists
     """
     for sstate in storage.all(State).values():
-        if state.id == id:
+        if sstate.id == id:
             return render_template("9-states.html", state=sstate)
     return render_template("9-states.html")
 
