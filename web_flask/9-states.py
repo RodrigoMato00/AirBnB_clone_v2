@@ -22,7 +22,7 @@ def states(id):
     if id is None:
         kid = '{}.{}'.format('State', id)
         if kid in sstates:
-            sstate = sstates[kid]
+            sstates = sstates[kid]
         else:
             sstates = None
     elif id is not None:
