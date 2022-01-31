@@ -22,8 +22,8 @@ def states_lists():
     """
     state list
     """
-    states = storage.all(State)
-    return render_template("7-states_list.html", states=states)
+    sstates = storage.all(State)
+    return render_template("7-states_list.html", states=sstates)
 
 
 @app.teardown_appcontext
