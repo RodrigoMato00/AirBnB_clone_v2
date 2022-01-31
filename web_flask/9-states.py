@@ -19,13 +19,13 @@ def states(id):
     Displays a HTML page with info about <id>, if it exists
     """
     sstates = storage.all(State)
-    if id:
+    if id is None:
         kid = '{}.{}'.format('State', id)
         if kid in sstates:
             sstate = sstates[kid]
         else:
             sstates = None
-    elif id is None:
+    elif id is not None:
         return render_template("9-states.html", states=sstates, id=id)
 
 
