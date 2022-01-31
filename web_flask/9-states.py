@@ -12,24 +12,21 @@ app = Flask(__name__)
 
 
 @app.route("/states", strict_slashes=False)
-def states():
+@app.route("/states/<id>", strict_slashes=False)
+def states(id):
     """
     Displays an HTML page in a list of all States, states sorted by name
+    Displays a HTML page with info about <id>, if it exists
     """
     sstates = storage.all(State)
-    return render_template("9-states.html", state=sstates)
-
-
-@app.route("/states/<id>", strict_slashes=False)
-def states_id(id):
-    """
-    Displays a HTML page with info about
-    <id>, if it exists
-    """
-    for sstate in storage.all(State).values():
-        if sstate.id == id:
-            return render_template("9-states.html", state=sstate)
-    return render_template("9-states.html")
+    if id:
+        kid = '{}.{}'.format('State', id)
+        if kid in sstates:
+            sstate = sstates[kid]
+        else:
+            sstates = None
+    elif id is None:
+        return render_template("9-states.html", states=sstates, id=id)
 
 
 @app.teardown_appcontext
